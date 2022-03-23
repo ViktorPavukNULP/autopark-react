@@ -6,8 +6,8 @@ import "./Header.css"
 const Header = () => {
     return (
         <div className="Header">
-            <NavLink to="/cars">Cars</NavLink>
-            <NavLink to="/auto_parks">Auto parks</NavLink>
+            <NavLink to="/cars">All Cars</NavLink>
+            <NavLink to="/auto_parks">Autoparks</NavLink>
         </div>
     );
 };

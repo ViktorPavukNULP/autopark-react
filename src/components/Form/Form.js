@@ -16,6 +16,7 @@ const Form = () => {
         setValue("brand", carForUpdate.brand);
         setValue("price", carForUpdate.price);
         setValue("year", carForUpdate.year);
+        setValue("auto_park", carForUpdate.auto_park);
     }, [carForUpdate])
 
     const submit = (data) => {
@@ -35,10 +36,8 @@ const Form = () => {
             {errors.year && <div className="error">{errors.year.message}</div>}
             <div><label>Autopark id: <input type="text" {...register('auto_park')}/></label></div>
             {errors.auto_park && <div className="error">{errors.auto_park.message}</div>}
-            <div>
-                <button onClick={handleSubmit(submit)}>Create</button>
-            </div>
-            {carForUpdate.id && <button onClick={handleSubmit(update)}>Update</button>}
+            <div><button onClick={handleSubmit(submit)}>Create</button>
+            {carForUpdate.id && <button onClick={handleSubmit(update)}>Update</button>}</div>
         </form>
     );
 };

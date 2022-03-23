@@ -1,12 +1,10 @@
-import axios from "axios";
+import {axiosService} from "./axios.service";
+import {urls} from "../constants/urls";
 
-import baseURL, {urls} from "../constants/urls";
-
-const axiosInstance = axios.create({baseURL});
 
 export const carService = {
-    getAll: () => axiosInstance.get(urls.cars).then(value => value.data),
-    deleteById: (id) => axiosInstance.delete(`${urls.cars}/${id}/`).then(value => value.data),
-    create: (car) => axiosInstance.post(`${urls.cars}/`,car).then(value => value.data),
-    update: (id, newCar) => axiosInstance.patch(`${urls.cars}/${id}/`,newCar)
+    getAll: () => axiosService.get(urls.cars).then(value => value.data),
+    deleteById: (id) => axiosService.delete(`${urls.cars}/${id}/`).then(value => value.data),
+    create: (car) => axiosService.post(`${urls.cars}/`,car).then(value => value.data),
+    update: (id, newCar) => axiosService.patch(`${urls.cars}/${id}/`,newCar)
 }
