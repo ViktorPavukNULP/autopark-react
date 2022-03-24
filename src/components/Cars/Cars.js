@@ -3,14 +3,17 @@ import {useDispatch, useSelector} from "react-redux";
 
 import Car from "../Car/Car";
 import {getAllCars} from "../../store/car.slice";
+import {useParams} from "react-router-dom";
 
 const Cars = () => {
     const {cars, status, error} = useSelector(state => state["carReducer"]);
     const dispatch = useDispatch();
 
+    const {id} = useParams();
+    console.log(id);
     useEffect(() => {
-        dispatch(getAllCars());
-    }, []);
+        dispatch(getAllCars(id));
+    }, [id]);
 
     return (
         <div>

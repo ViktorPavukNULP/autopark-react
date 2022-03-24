@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {autoParkService} from "../services/autoPark.service";
 
 export const getAllAutoParks = createAsyncThunk(
-    "autoParkSlice/getAllCars",
+    "autoParkSlice/getAllAutoParks",
     async (_, {rejectWithValue}) => {
         try {
             return await autoParkService.getAll();
@@ -26,6 +26,22 @@ const autoParkSlice = createSlice({
         removeAutoPark: (state, action) => {
             state.autoParks = state.autoParks.filter(autoPark => autoPark.id !== action.payload.id)
         }
+    },
+    extraReducers: {
+        [getAllAutoParks.pending]:
+            (state) => {
+                state.status = "pending";
+            },
+        [getAllAutoParks.fulfilled]:
+            (state, action) => {
+                state.status = "fulfilled";
+                state.autoParks = action.payload;
+            },
+        [getAllAutoParks.rejected]:
+            (state, action) => {
+                state.status = "error";
+                state.error = action.payload;
+            }
     }
 });
 

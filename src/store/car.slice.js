@@ -4,13 +4,15 @@ import {carService} from "../services/car.service";
 
 export const getAllCars = createAsyncThunk(
     "carSlice/getAllCars",
-    async (_, {rejectWithValue}) => {
+    async (id, {rejectWithValue}) => {
         try {
-            return await carService.getAll();
+            console.log(id)
+            return await carService.getAll(id);
         } catch (e) {
             return rejectWithValue(e.message)
         }
     });
+
 
 export const createCar = createAsyncThunk(
     "carSlice/createCar",
@@ -39,7 +41,7 @@ export const updateCar = createAsyncThunk(
     async ({id, newCar}, {dispatch}) => {
         try {
             await carService.update(id, newCar);
-            dispatch(setCarForUpdate({id: '', brand: '', price: '', year: ''}));
+            dispatch(setCarForUpdate({id: '', brand: '', price: '', year: '', auto_park: ''}));
             dispatch(updateCarState({...newCar, id: id}));
         } catch (e) {
             console.log(e);
@@ -68,27 +70,24 @@ const carSlice = createSlice({
             state.cars = state.cars.map(car => (car.id === action.payload.id ? action.payload : car));
         }
 },
-extraReducers: {
-    [getAllCars.pending]
-:
-    (state) => {
-        state.status = "pending";
-    },
-        [getAllCars.fulfilled]
-:
-    (state, action) => {
-        state.status = "fulfilled";
-        state.cars = action.payload;
-    },
-        [getAllCars.rejected]
-:
-    (state, action) => {
-        state.status = "error";
-        state.error = action.payload;
+    extraReducers: {
+        [getAllCars.pending]:
+        (state) => {
+            state.status = "pending";
+        },
+            [getAllCars.fulfilled]:
+        (state, action) => {
+            state.status = "fulfilled";
+            state.cars = action.payload;
+        },
+            [getAllCars.rejected]:
+        (state, action) => {
+            state.status = "error";
+            state.error = action.payload;
+        }
     }
-}
-})
-;
+    })
+    ;
 
 const carReducer = carSlice.reducer;
 export const {addCar, removeCar, setCarForUpdate, updateCarState} = carSlice.actions;
